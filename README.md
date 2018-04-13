@@ -1,15 +1,13 @@
-# Event Module
+# Service Module
  
-The event module gives the possibility to add events to a Luya application. Therefore events can be added in the backend, which get shown on the frontend afterwards.
-It is possible to list all, past, current and future events.
-It is possible to show all categories or a single category.
+WIP, do not use yet...
  
 ## Installation
 
 For the installation of modules Composer is required.
 
 ```sh
-composer require johnnymcweed/luya-module-event:dev-master 
+composer require johnnymcweed/luya-module-service:dev-master 
 ```
 
 ### Configuration
@@ -18,8 +16,8 @@ composer require johnnymcweed/luya-module-event:dev-master
 return [
     'modules' => [
         // ...
-        'event' => 'johnnymcweed\event\frontend\Module',
-        'eventadmin' => 'johnnymcweed\event\admin\Module',
+        'service' => 'johnnymcweed\service\frontend\Module',
+        'serviceadmin' => 'johnnymcweed\service\admin\Module',
         // ...
     ],
 ];
@@ -41,7 +39,7 @@ After successfully installation and configuration run the migrate, import and se
 ./vendor/bin/luya import
 ```
 
-After adding the persmissions to your group you will be able to edit and add new news articles.
+After adding the persmissions to your group you will be able to edit and add new services.
 
 ## Example Views
 
