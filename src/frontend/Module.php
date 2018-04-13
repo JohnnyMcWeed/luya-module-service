@@ -1,6 +1,6 @@
 <?php
 
-namespace app\modules\service\frontend;
+namespace johnnymcweed\service\frontend;
 
 /**
  * Service Admin Module.
