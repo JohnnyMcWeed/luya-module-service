@@ -34,7 +34,15 @@ class DefaultController extends \yii\web\Controller
      */
     public function actionDetail()
     {
-        return $this->render('detail');
+        $model = Service::findOne($id);
+
+        if (!$model) {
+            return $this->goHome();
+        }
+
+        return $this->render('detail', [
+            'model' => $model,
+        ]);
     }
 
     /*

@@ -11,8 +11,6 @@ use luya\admin\ngrest\base\NgRestModel;
 
 /**
  * Service.
- * 
- * File has been created with `crud/create` command on LUYA version 1.0.0-dev. 
  *
  * @property integer $id
  * @property text $title
@@ -37,8 +35,6 @@ class Service extends NgRestModel
     public $offerBundles = [];
     public $isSimilarTo = [];
     public $isRelatedTo = [];
-
-    // Todo: Make isSimilarTo, isRelatedTo work
 
     /**
      * @inheritdoc
@@ -70,12 +66,19 @@ class Service extends NgRestModel
         $this->on(self::EVENT_BEFORE_INSERT, [$this, 'eventBeforeInsert']);
         $this->on(self::EVENT_BEFORE_UPDATE, [$this, 'eventBeforeUpdate']);
     }
+
+    /**
+     * Event triggers before update
+     */
     public function eventBeforeUpdate()
     {
         $this->update_user_id = Yii::$app->adminuser->getId();
         $this->timestamp_update = time();
     }
 
+    /**
+     * Event triggers before insert
+     */
     public function eventBeforeInsert()
     {
         $this->create_user_id = Yii::$app->adminuser->getId();
@@ -216,6 +219,9 @@ class Service extends NgRestModel
         ];
     }
 
+    /**
+     * @inheritdoc
+     */
     public function extraFields()
     {
         return [
@@ -224,6 +230,9 @@ class Service extends NgRestModel
         ];
     }
 
+    /**
+     * @inheritdoc
+     */
     public function ngRestExtraAttributeTypes()
     {
         return [
@@ -232,56 +241,97 @@ class Service extends NgRestModel
         ];
     }
 
+    /**
+     * Get the service's main image
+     *
+     * @return bool|\luya\admin\image\Item
+     */
     public function getImage()
     {
         return Yii::$app->storage->getImage($this->image_id);
     }
 
     /**
-     * Get the service url
+     * Get the service detail url
      *
      * @return string
      */
-    public function getServiceUrl()
+    public function getDetailUrl()
     {
-        return Url::toRoute(['/service/default/service', 'id' => $this->id, 'title' => Inflector::slug($this->title)]);
+        return Url::toRoute(['/service/default/detail', 'id' => $this->id, 'title' => Inflector::slug($this->title)]);
     }
 
+    /**
+     * Get the service's offer items
+     *
+     * @return $this
+     */
     public function getOfferItems() {
         return $this->hasMany(OfferItem::class, ['id' => 'offeritem_id'])->viaTable('service_offer_item_service', ['service_id' => 'id']);
     }
 
+    /**
+     * Return the number of offer items connected to that service
+     *
+     * @return int|string
+     */
     public function getOfferItemsCount() {
         return $this->hasMany(OfferItemService::class, ['service_id' => 'id'])->count();
     }
 
+    /**
+     * Get the service's offer bundles
+     *
+     * @return $this
+     */
     public function getOfferBundles() {
         return $this->hasMany(OfferBundle::class, ['id' => 'offerbundle_id'])->viaTable('service_offer_bundle_service', ['service_id' => 'id']);
     }
 
+    /**
+     * Return the number of offer bundles connected to that service
+     *
+     * @return int|string
+     */
     public function getOfferBundlesCount() {
         return $this->hasMany(OfferBundleService::class, ['service_id' => 'id'])->count();
     }
 
+    /**
+     * Get services similar to the actual one
+     *
+     * @return $this
+     */
     public function getIsSimilarTo() {
         return $this->hasMany(Service::class, ['id' => 'similar_service_id'])->viaTable('service_is_similar_to', ['service_id' => 'id']);
     }
 
+    /**
+     * Get services related to the actual one
+     *
+     * @return $this
+     */
     public function getIsRelatedTo() {
         return $this->hasMany(Service::class, ['id' => 'relation_service_id'])->viaTable('service_is_related_to', ['service_id' => 'id']);
     }
 
+    /**
+     * Get the cheapest offer connected to a service
+     *
+     * @return array|bool
+     */
     public function getCheapestOffer() {
         $offers = $this->getOfferItems()->asArray()->all();
         if ($offers !== []) {
-            $minPriceOffer = $this->findMinPriceOffer($offers);
+            return $this->findMinPriceOffer($offers);
         } else {
-            $minPriceOffer = [];
+            return false;
         }
-        return $minPriceOffer;
     }
 
     /**
+     * Find the cheapest offer in an array
+     *
      * @param $arr OfferItem
      * @return bool
      */

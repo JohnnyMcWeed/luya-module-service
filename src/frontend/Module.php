@@ -32,28 +32,23 @@ class Module extends \luya\base\Module
      * @var array
      */
     public $urlRules = [
-        ['pattern' => 'service/offer-calculator', 'route' => 'service/default/offer-calculator', 'composition' => [
-            'en' => 'service/offer-calculator',
-            'de' => 'leistung/preisrechner',
-            'fr' => 'service/calculateur-d-offre'
-        ]],
-        ['pattern' => 'service/<slug:[A-Za-z0-9-_.]+>', 'route' => 'service/default/category', 'composition' => [
-            'de' => 'leistung/<slug:[A-Za-z0-9-_.]+>',
-            'fr' => 'service/<slug:[A-Za-z0-9-_.]+>'
-        ]],
-        ['pattern' => 'service/<slug:[A-Za-z0-9-_.]+>', 'route' => 'service/default/detail', 'composition' => [
-            'de' => 'leistung/<slug:[A-Za-z0-9-_.]+>',
-            'fr' => 'service/<slug:[A-Za-z0-9-_.]+>'
-        ]],
-        ['pattern' => 'service', 'route' => 'service/default/index', 'composition' => [
-            'en' => 'service',
-            'de' => 'leistung',
-            'fr' => 'service'
-        ]]
-
-
-        //['pattern' => 'services/', 'route' => 'service/default/services'],
-        //['pattern' => 'services/offer-calculator', 'route' => 'service/default/offer-calculator'],
-        //['pattern' => 'service/<id:\d+>/<title:[a-zA-Z0-9\-]+>/', 'route' => 'service/default/service'],
+        [
+            'pattern' => 'service/<id:\d+>/<title:[a-zA-Z0-9\-]+>/',
+            'route' => 'service/default/detail',
+            'composition' => [
+                'en' => 'service/<id:\d+>/<title:[a-zA-Z0-9\-]+>/',
+                'de' => 'leistung/<id:\d+>/<title:[a-zA-Z0-9\-]+>/',
+                'fr' => 'service/<id:\d+>/<title:[a-zA-Z0-9\-]+>/'
+            ]
+        ],
+        [
+            'pattern' => 'service',
+            'route' => 'service/default/index',
+            'composition' => [
+                'en' => 'service',
+                'de' => 'leistung',
+                'fr' => 'service'
+            ]
+        ]
     ];
 }

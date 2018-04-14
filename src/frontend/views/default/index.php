@@ -13,7 +13,7 @@
             <?php endif; ?>
         </div>
         <div class="col-sm-8">
-            <h1><?= $service->title ?></h1>
+            <h1><a href="<?= $service->getDetailUrl() ?>"><?= $service->title ?></a></h1>
             <?= $service->teaser_text ?>
             <?php
             $cheapestOffer = $service->getCheapestOffer();
