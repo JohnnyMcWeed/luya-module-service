@@ -37,8 +37,8 @@ class OfferBundleService extends NgRestModel
     public function attributeLabels()
     {
         return [
-            'service_id' => Yii::t('app', 'Service ID'),
-            'offerbundle_id' => Yii::t('app', 'Offerbundle ID'),
+            'service_id' => Module::t('Service'),
+            'offerbundle_id' => Module::t('Offerbundle'),
         ];
     }
 

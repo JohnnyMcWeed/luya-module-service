@@ -12,5 +12,5 @@ class ServiceController extends \luya\admin\ngrest\base\Api
     /**
      * @var string The path to the model which is the provider for the rules and fields.
      */
-    public $modelClass = 'app\modules\service\models\Service';
+    public $modelClass = 'johnnymcweed\service\models\Service';
 }

@@ -14,15 +14,15 @@ namespace johnnymcweed\service\admin;
 class Module extends \luya\admin\base\Module
 {
     public $apis = [
-        'api-service-service' => 'app\modules\service\admin\apis\ServiceController',
-        'api-service-isrelatedto' => 'app\modules\service\admin\apis\IsRelatedToController',
-        'api-service-issimilarto' => 'app\modules\service\admin\apis\IsSimilarToController',
+        'api-service-service' => 'johnnymcweed\service\admin\apis\ServiceController',
+        'api-service-isrelatedto' => 'johnnymcweed\service\admin\apis\IsRelatedToController',
+        'api-service-issimilarto' => 'johnnymcweed\service\admin\apis\IsSimilarToController',
 
-        'api-service-offeritem' => 'app\modules\service\admin\apis\OfferItemController',
-        'api-service-offerbundle' => 'app\modules\service\admin\apis\OfferBundleController',
-        'api-service-offerbundleofferitem' => 'app\modules\service\admin\apis\OfferBundleOfferItemController',
-        'api-service-offeritemservice' => 'app\modules\service\admin\apis\OfferItemServiceController',
-        'api-service-offerbundleservice' => 'app\modules\service\admin\apis\OfferBundleServiceController',
+        'api-service-offeritem' => 'johnnymcweed\service\admin\apis\OfferItemController',
+        'api-service-offerbundle' => 'johnnymcweed\service\admin\apis\OfferBundleController',
+        'api-service-offerbundleofferitem' => 'johnnymcweed\service\admin\apis\OfferBundleOfferItemController',
+        'api-service-offeritemservice' => 'johnnymcweed\service\admin\apis\OfferItemServiceController',
+        'api-service-offerbundleservice' => 'johnnymcweed\service\admin\apis\OfferBundleServiceController',
     ];
 
     public function getMenu()
@@ -63,7 +63,7 @@ class Module extends \luya\admin\base\Module
     public function getAdminAssets()
     {
         return [
-            'app\modules\service\admin\assets\CalculatorAsset'
+            'johnnymcweed\service\admin\assets\CalculatorAsset'
         ];
     }
 }

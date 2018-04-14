@@ -2,6 +2,7 @@
 
 namespace johnnymcweed\service\models;
 
+use johnnymcweed\service\admin\Module;
 use Yii;
 use luya\admin\ngrest\base\NgRestModel;
 
@@ -37,8 +38,8 @@ class IsSimilarTo extends NgRestModel
     public function attributeLabels()
     {
         return [
-            'service_id' => Yii::t('app', 'Service ID'),
-            'similar_service_id' => Yii::t('app', 'Similar Service ID'),
+            'service_id' => Module::t('Service'),
+            'similar_service_id' => Module::t('Similar Services'),
         ];
     }
 

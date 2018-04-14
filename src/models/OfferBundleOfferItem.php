@@ -2,6 +2,7 @@
 
 namespace johnnymcweed\service\models;
 
+use johnnymcweed\service\admin\Module;
 use Yii;
 use luya\admin\ngrest\base\NgRestModel;
 
@@ -37,8 +38,8 @@ class OfferBundleOfferItem extends NgRestModel
     public function attributeLabels()
     {
         return [
-            'offerBundle_id' => Yii::t('app', 'Offer Bundle ID'),
-            'offerItem_id' => Yii::t('app', 'Offer Item ID'),
+            'offerBundle_id' => Module::t('Offer Bundle'),
+            'offerItem_id' => Module::t('Offer Item'),
         ];
     }
 

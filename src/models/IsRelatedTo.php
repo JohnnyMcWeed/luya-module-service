@@ -2,6 +2,7 @@
 
 namespace johnnymcweed\service\models;
 
+use johnnymcweed\service\admin\Module;
 use Yii;
 use luya\admin\ngrest\base\NgRestModel;
 
@@ -37,8 +38,8 @@ class IsRelatedTo extends NgRestModel
     public function attributeLabels()
     {
         return [
-            'service_id' => Yii::t('app', 'Service ID'),
-            'relation_service_id' => Yii::t('app', 'Relation Service ID'),
+            'service_id' => Module::t('Service'),
+            'relation_service_id' => Module::t('Relation Service'),
         ];
     }
 

@@ -12,5 +12,5 @@ class IsSimilarToController extends \luya\admin\ngrest\base\Controller
     /**
      * @var string The path to the model which is the provider for the rules and fields.
      */
-    public $modelClass = 'app\modules\service\models\IsSimilarTo';
+    public $modelClass = 'johnnymcweed\service\models\IsSimilarTo';
 }
