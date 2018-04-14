@@ -1,7 +1,7 @@
 <?php
 /* @var $this yii\web\View */
 // TODO: Translate everything
-use app\modules\service\frontend\widgets\serviceswidget\ServicesWidget;
+
 ?>
 <h1>Services</h1>
 
