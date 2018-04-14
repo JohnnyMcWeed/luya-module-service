@@ -64,6 +64,34 @@ class Service extends NgRestModel
     /**
      * @inheritdoc
      */
+    public function init()
+    {
+        parent::init();
+        $this->on(self::EVENT_BEFORE_INSERT, [$this, 'eventBeforeInsert']);
+        $this->on(self::EVENT_BEFORE_UPDATE, [$this, 'eventBeforeUpdate']);
+    }
+    public function eventBeforeUpdate()
+    {
+        $this->update_user_id = Yii::$app->adminuser->getId();
+        $this->timestamp_update = time();
+    }
+
+    public function eventBeforeInsert()
+    {
+        $this->create_user_id = Yii::$app->adminuser->getId();
+        $this->update_user_id = Yii::$app->adminuser->getId();
+        $this->timestamp_update = time();
+        if (empty($this->timestamp_create)) {
+            $this->timestamp_create = time();
+        }
+        if (empty($this->timestamp_display_from)) {
+            $this->timestamp_display_from = time();
+        }
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function attributeLabels()
     {
         return [
@@ -183,7 +211,7 @@ class Service extends NgRestModel
             ['list', ['title', 'offerItemsCount', 'offerBundlesCount', 'parent_id']],
             [['create', 'update'], ['title', 'text', 'teaser_text', 'parent_id', 'slug', 'seo_title', 'seo_description',
                 'image_id', 'logo_id', 'image_list', 'file_list', 'timestamp_create',
-                'timestamp_display_from', 'timestamp_display_until', 'is_display_limit', 'offerItems', 'offerBundles', 'isSimilarTo', 'isRelatedTo']],
+                'timestamp_display_from', 'timestamp_display_until', 'is_display_limit', 'offerItems', 'offerBundles', ]],
             ['delete', false],
         ];
     }
@@ -202,6 +230,11 @@ class Service extends NgRestModel
             'offerItemsCount' => 'number',
             'offerBundlesCount' => 'number',
         ];
+    }
+
+    public function getImage()
+    {
+        return Yii::$app->storage->getImage($this->image_id);
     }
 
     /**
@@ -236,5 +269,44 @@ class Service extends NgRestModel
 
     public function getIsRelatedTo() {
         return $this->hasMany(Service::class, ['id' => 'relation_service_id'])->viaTable('service_is_related_to', ['service_id' => 'id']);
+    }
+
+    public function getCheapestOffer() {
+        $offers = $this->getOfferItems()->asArray()->all();
+        if ($offers !== []) {
+            $minPriceOffer = $this->findMinPriceOffer($offers);
+        } else {
+            $minPriceOffer = [];
+        }
+        return $minPriceOffer;
+    }
+
+    // Todo: Correct for discounts
+    private function findMinPriceOffer($arr) {
+        $minPriceItem = [];
+        foreach ($arr as $offer) {
+            if ($offer['is_discount'] &&
+                $offer['discount_from'] < time() &&
+                $offer['discount_until'] > time() &&
+                $offer['price'] > $offer['discount_price']) {
+                if ( $minPriceItem === [] ) {
+                    $minPriceItem = [$offer['id'], $offer['discount_price']];
+                } elseif ($minPriceItem[1] > $offer['discount_price']) {
+                    $minPriceItem = [$offer['id'], $offer['discount_price']];
+                }
+            } else {
+                if ( $minPriceItem === [] ) {
+                    $minPriceItem = [$offer['id'], $offer['price']];
+                } elseif ($minPriceItem[1] > $offer['price']) {
+                    $minPriceItem = [$offer['id'], $offer['price']];
+                }
+            }
+        }
+        foreach ($arr as $offer) {
+            if ($offer['id'] === $minPriceItem[0]) {
+                return $offer;
+            }
+        }
+        return false;
     }
 }

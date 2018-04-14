@@ -19,10 +19,6 @@ class DefaultController extends \yii\web\Controller
                 'defaultOrder' => $this->module->serviceDefaultOrder,
             ],
             'pagination' => [
-                'route' => $this->module->id,
-                'params' => [
-                    'page' => Yii::$app->request->get('page')
-                ],
                 'defaultPageSize' => $this->module->serviceDefaultPageSize
             ]
         ]);

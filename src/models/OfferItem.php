@@ -43,6 +43,34 @@ class OfferItem extends NgRestModel
     /**
      * @inheritdoc
      */
+    public function init()
+    {
+        parent::init();
+        $this->on(self::EVENT_BEFORE_INSERT, [$this, 'eventBeforeInsert']);
+        $this->on(self::EVENT_BEFORE_UPDATE, [$this, 'eventBeforeUpdate']);
+    }
+    public function eventBeforeUpdate()
+    {
+        $this->update_user_id = Yii::$app->adminuser->getId();
+        $this->timestamp_update = time();
+    }
+
+    public function eventBeforeInsert()
+    {
+        $this->create_user_id = Yii::$app->adminuser->getId();
+        $this->update_user_id = Yii::$app->adminuser->getId();
+        $this->timestamp_update = time();
+        if (empty($this->timestamp_create)) {
+            $this->timestamp_create = time();
+        }
+        if (empty($this->timestamp_display_from)) {
+            $this->timestamp_display_from = time();
+        }
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function attributeLabels()
     {
         return [
