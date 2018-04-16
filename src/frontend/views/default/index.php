@@ -17,7 +17,7 @@
             <?= $service->teaser_text ?>
             <?php
             $cheapestOffer = $service->getCheapestOffer();
-            if ($cheapestOffer !== [] && $cheapestOffer['price'] !== null): ?>
+            if ($cheapestOffer !== false): ?>
             <div class="prices">
                 Price starting from:
                 <?php

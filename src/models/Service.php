@@ -258,7 +258,7 @@ class Service extends NgRestModel
      */
     public function getDetailUrl()
     {
-        return Url::toRoute(['/service/default/detail', 'id' => $this->id, 'title' => Inflector::slug($this->title)]);
+        return Url::toRoute(['/service/default/detail', 'id' => $this->id, 'slug' => $this->slug]);
     }
 
     /**

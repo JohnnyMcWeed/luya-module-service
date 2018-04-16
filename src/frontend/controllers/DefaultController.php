@@ -32,16 +32,16 @@ class DefaultController extends \yii\web\Controller
     /*
      *
      */
-    public function actionDetail()
+    public function actionDetail($id, $slug)
     {
-        $model = Service::findOne($id);
+        $model = Service::findOne(['id' => $id, 'is_deleted' => false]);
 
         if (!$model) {
             return $this->goHome();
         }
 
         return $this->render('detail', [
-            'model' => $model,
+           'model' => $model,
         ]);
     }
 
