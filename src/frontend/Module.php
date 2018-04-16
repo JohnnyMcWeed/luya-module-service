@@ -28,11 +28,6 @@ class Module extends \luya\base\Module
     public $serviceDefaultPageSize = 10;
 
     /**
-     *
-     */
-
-
-    /**
      * The routes for this module
      * @var array
      */
