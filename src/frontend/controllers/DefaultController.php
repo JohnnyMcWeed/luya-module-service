@@ -5,8 +5,9 @@ namespace johnnymcweed\service\frontend\controllers;
 use johnnymcweed\service\models\Service;
 use Yii;
 use yii\data\ActiveDataProvider;
+use luya\web\Controller;
 
-class DefaultController extends \yii\web\Controller
+class DefaultController extends Controller
 {
     /*
      * Default list view
