@@ -28,17 +28,17 @@ class Module extends \luya\admin\base\Module
     public function getMenu()
     {
         return (new \luya\admin\components\AdminMenuBuilder($this))
-            ->node(self::t('Service'), 'extension')
+            ->node(self::t('Service'), 'store_mall_directory')
             ->group(self::t('Administrate'))
-            ->itemApi(self::t('Service'), 'serviceadmin/service/index', 'label', 'api-service-service')
+            ->itemApi(self::t('Service'), 'serviceadmin/service/index', 'transfer_within_a_station', 'api-service-service')
             ->itemApi(self::t('Is Related To'), 'serviceadmin/is-related-to/index', 'label', 'api-service-isrelatedto', ['hiddenInMenu' => true])
             ->itemApi(self::t('Is Similar To'), 'serviceadmin/is-similar-to/index', 'label', 'api-service-issimilarto', ['hiddenInMenu' => true])
-            ->itemApi(self::t('Offer Item'), 'serviceadmin/offer-item/index', 'label', 'api-service-offeritem')
-            ->itemApi(self::t('Offer Bundle'), 'serviceadmin/offer-bundle/index', 'label', 'api-service-offerbundle')
+            ->itemApi(self::t('Offer Item'), 'serviceadmin/offer-item/index', 'shop', 'api-service-offeritem')
+            ->itemApi(self::t('Offer Bundle'), 'serviceadmin/offer-bundle/index', 'shop_two', 'api-service-offerbundle')
             ->itemApi(self::t('Offer Bundle Offer Item'), 'serviceadmin/offer-bundle-offer-item/index', 'label', 'api-service-offerbundleofferitem', ['hiddenInMenu' => true])
             ->itemApi(self::t('OfferItemService'), 'serviceadmin/offer-item-service/index', 'label', 'api-service-offeritemservice', ['hiddenInMenu' => true])
             ->itemApi(self::t('OfferBundleService'), 'serviceadmin/offer-bundle-service/index', 'label', 'api-service-offerbundleservice', ['hiddenInMenu' => true])
-            ->itemRoute(self::t('Calculator'), 'serviceadmin/calculator/index', 'label');
+            ->itemRoute(self::t('Calculator'), 'serviceadmin/calculator/index', 'format_list_numbered');
     }
 
     public static function onLoad()
