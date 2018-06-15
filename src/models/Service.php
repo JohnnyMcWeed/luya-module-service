@@ -1,13 +1,12 @@
 <?php
-
 namespace johnnymcweed\service\models;
 
-use johnnymcweed\service\admin\Module;
+use Yii;
+use luya\admin\ngrest\base\NgRestModel;
 use luya\admin\ngrest\plugins\CheckboxRelationActiveQuery;
 use luya\helpers\Inflector;
 use luya\helpers\Url;
-use Yii;
-use luya\admin\ngrest\base\NgRestModel;
+use johnnymcweed\service\admin\Module;
 
 /**
  * Service.
