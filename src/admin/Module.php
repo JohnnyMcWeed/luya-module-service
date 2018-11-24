@@ -23,6 +23,9 @@ class Module extends \luya\admin\base\Module
         'api-service-offerbundleofferitem' => 'johnnymcweed\service\admin\apis\OfferBundleOfferItemController',
         'api-service-offeritemservice' => 'johnnymcweed\service\admin\apis\OfferItemServiceController',
         'api-service-offerbundleservice' => 'johnnymcweed\service\admin\apis\OfferBundleServiceController',
+
+        'api-service-benefit' => 'johnnymcweed\service\admin\apis\BenefitController',
+        'api-service-servicebenefit' => 'johnnymcweed\service\admin\apis\ServicebenefitController',
     ];
 
     public function getMenu()
@@ -38,6 +41,8 @@ class Module extends \luya\admin\base\Module
             ->itemApi(self::t('Offer Bundle Offer Item'), 'serviceadmin/offer-bundle-offer-item/index', 'label', 'api-service-offerbundleofferitem', ['hiddenInMenu' => true])
             ->itemApi(self::t('OfferItemService'), 'serviceadmin/offer-item-service/index', 'label', 'api-service-offeritemservice', ['hiddenInMenu' => true])
             ->itemApi(self::t('OfferBundleService'), 'serviceadmin/offer-bundle-service/index', 'label', 'api-service-offerbundleservice', ['hiddenInMenu' => true])
+            ->itemApi(self::t('Benefit'), 'serviceadmin/benefit/index', 'label', 'api-service-benefit')
+            ->itemApi(self::t('Servicebenefit'), 'serviceadmin/servicebenefit/index', 'label', 'api-service-servicebenefit')
             ->itemRoute(self::t('Calculator'), 'serviceadmin/calculator/index', 'format_list_numbered');
     }
 

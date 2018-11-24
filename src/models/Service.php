@@ -212,7 +212,7 @@ class Service extends NgRestModel
         return [
             ['list', ['title', 'offerItemsCount', 'offerBundlesCount', 'parent_id']],
             [['create', 'update'], ['title', 'text', 'teaser_text', 'parent_id', 'slug', 'seo_title', 'seo_description',
-                'image_id', 'logo_id', 'image_list', 'file_list', 'timestamp_create', 'isRelatedTo', 'isSimilarTo',
+                'image_id', 'logo_id', 'image_list', 'file_list', 'isRelatedTo', 'isSimilarTo',
                 'timestamp_display_from', 'timestamp_display_until', 'is_display_limit', 'offerItems', 'offerBundles']],
             ['delete', false],
         ];
