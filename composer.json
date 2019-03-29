@@ -14,7 +14,7 @@
     "issues": "https://github.com/JohnnyMcWeed/luya-module-service/issues"
   },
   "require": {
-    "netfant/luya-category": "dev-master",
+    "netfant/luya-category": "dev-master"
   },
   "autoload" : {
     "psr-4" : {
