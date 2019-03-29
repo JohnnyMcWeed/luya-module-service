@@ -6,28 +6,27 @@ use Yii;
 use luya\admin\ngrest\base\NgRestModel;
 
 /**
- * Benefit.
+ * Story.
  * 
  * File has been created with `crud/create` command. 
  *
  * @property integer $id
- * @property string $title
- * @property string $teaser
- * @property integer $image_id
+ * @property text $title
+ * @property text $story
  */
-class Benefit extends NgRestModel
+class Story extends NgRestModel
 {
     /**
      * @inheritdoc
      */
-    public $i18n = ['title', 'teaser'];
+    public $i18n = ['title', 'story'];
 
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'service_benefit';
+        return 'service_story';
     }
 
     /**
@@ -35,7 +34,7 @@ class Benefit extends NgRestModel
      */
     public static function ngRestApiEndpoint()
     {
-        return 'api-service-benefit';
+        return 'api-service-story';
     }
 
     /**
@@ -46,8 +45,7 @@ class Benefit extends NgRestModel
         return [
             'id' => Yii::t('app', 'ID'),
             'title' => Yii::t('app', 'Title'),
-            'teaser' => Yii::t('app', 'Teaser'),
-            'image_id' => Yii::t('app', 'Image'),
+            'story' => Yii::t('app', 'Story'),
         ];
     }
 
@@ -57,8 +55,8 @@ class Benefit extends NgRestModel
     public function rules()
     {
         return [
-            [['image_id'], 'integer'],
-            [['title', 'teaser'], 'string', 'max' => 255],
+            [['title', 'story'], 'required'],
+            [['title', 'story'], 'string'],
         ];
     }
 
@@ -68,13 +66,8 @@ class Benefit extends NgRestModel
     public function ngRestAttributeTypes()
     {
         return [
-            'title' => 'text',
-            'teaser' => 'textarea',
-            'image_id' => [
-                'image',
-                'imageItem' => true,
-                'filter' => false
-            ]
+            'title' => 'textarea',
+            'story' => 'textarea',
         ];
     }
 
@@ -84,8 +77,8 @@ class Benefit extends NgRestModel
     public function ngRestScopes()
     {
         return [
-            ['list', ['title', 'teaser', 'image_id']],
-            [['create', 'update'], ['title', 'teaser', 'image_id']],
+            ['list', ['title', 'story']],
+            [['create', 'update'], ['title', 'story']],
             ['delete', false],
         ];
     }

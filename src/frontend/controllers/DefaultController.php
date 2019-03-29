@@ -3,55 +3,58 @@
 namespace johnnymcweed\service\frontend\controllers;
 
 use johnnymcweed\service\models\Service;
+use luya\news\models\Cat;
 use Yii;
 use yii\data\ActiveDataProvider;
 use luya\web\Controller;
 
 class DefaultController extends Controller
 {
+    const TYPE_ROOT = 1;
+    const TYPE_SERVICE = 2;
+
     /*
      * Default list view
      */
-    public function actionIndex()
+    public function actionIndex($slugs = null)
     {
-        $provider = new ActiveDataProvider([
-            'query' => Service::find()->andWhere(['is_deleted' => false]),
-            'sort' => [
-                'defaultOrder' => $this->module->serviceDefaultOrder,
-            ],
-            'pagination' => [
-                'defaultPageSize' => $this->module->serviceDefaultPageSize
-            ]
-        ]);
-        return $this->render('index', [
-            'model' => Service::class,
-            'provider' => $provider
-        ]);
-    }
+        if (empty($slugs)) {
+            $service = Service::find()->roots()->all();
+            if (count($service) !== 1) {
+                $type = self::TYPE_ROOT;
+            } else {
+                $type = self::TYPE_SERVICE;
+                $service = $service[0];
+            }
+        } else {
+            $params = explode('/', $slugs);
+            if (!empty($services = Service::find()->where(['like', 'slug', 'root'])->all())) {
+                if (count($services) !== 1) {
+                    foreach ($services as $serv) {
+                        $parents = $service->parents();
+
+                        // Todo: Check if it is the right one
+                        $type = self::TYPE_SERVICE;
+                        $service = $serv;
+                    }
+                } else {
+
+                    // Todo: Check if it is the right one
+                    $type = self::TYPE_SERVICE;
+                    $service = $service[0];
+                }
 
 
-    /*
-     *
-     */
-    public function actionDetail($id, $slug)
-    {
-        $model = Service::findOne(['id' => $id, 'is_deleted' => false]);
-
-        if (!$model) {
-            return $this->goHome();
+            } else {
+                // Todo: Go to 404 page
+                $type = null;
+                $service = null;
+            }
         }
 
-        return $this->render('detail', [
-           'model' => $model,
+        return $this->render('index', [
+            'type' => $type,
+            'service' => $service
         ]);
     }
-
-    /*
-     *
-     */
-    public function actionCalculator()
-    {
-        return $this->render('calculator');
-    }
-
 }

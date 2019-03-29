@@ -2,26 +2,25 @@
 
 namespace johnnymcweed\service\models;
 
-use johnnymcweed\service\admin\Module;
 use Yii;
 use luya\admin\ngrest\base\NgRestModel;
 
 /**
- * Offer Item Service.
+ * Servicestory.
  * 
  * File has been created with `crud/create` command. 
  *
  * @property integer $service_id
- * @property integer $offeritem_id
+ * @property integer $story_id
  */
-class OfferItemService extends NgRestModel
+class Servicestory extends NgRestModel
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'service_offer_item_service';
+        return 'service_servicestory';
     }
 
     /**
@@ -29,7 +28,7 @@ class OfferItemService extends NgRestModel
      */
     public static function ngRestApiEndpoint()
     {
-        return 'api-service-offeritemservice';
+        return 'api-service-servicestory';
     }
 
     /**
@@ -38,8 +37,8 @@ class OfferItemService extends NgRestModel
     public function attributeLabels()
     {
         return [
-            'service_id' => Module::t('Service'),
-            'offeritem_id' => Module::t('Offeritem'),
+            'service_id' => Yii::t('app', 'Service'),
+            'story_id' => Yii::t('app', 'Story'),
         ];
     }
 
@@ -49,8 +48,8 @@ class OfferItemService extends NgRestModel
     public function rules()
     {
         return [
-            [['service_id', 'offeritem_id'], 'required'],
-            [['service_id', 'offeritem_id'], 'integer'],
+            [['service_id', 'story_id'], 'required'],
+            [['service_id', 'story_id'], 'integer'],
         ];
     }
 
@@ -61,7 +60,7 @@ class OfferItemService extends NgRestModel
     {
         return [
             'service_id' => 'number',
-            'offeritem_id' => 'number',
+            'story_id' => 'number',
         ];
     }
 
@@ -71,8 +70,8 @@ class OfferItemService extends NgRestModel
     public function ngRestScopes()
     {
         return [
-            ['list', ['service_id', 'offeritem_id']],
-            [['create', 'update'], ['service_id', 'offeritem_id']],
+            ['list', ['service_id', 'story_id']],
+            [['create', 'update'], ['service_id', 'story_id']],
             ['delete', false],
         ];
     }

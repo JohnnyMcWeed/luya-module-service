@@ -37,8 +37,8 @@ class Servicebenefit extends NgRestModel
     public function attributeLabels()
     {
         return [
-            'service_id' => Yii::t('app', 'Service ID'),
-            'benefit_id' => Yii::t('app', 'Benefit ID'),
+            'service_id' => Yii::t('app', 'Service'),
+            'benefit_id' => Yii::t('app', 'Benefit'),
         ];
     }
 
@@ -60,6 +60,18 @@ class Servicebenefit extends NgRestModel
     public function ngRestAttributeTypes()
     {
         return [
+            'service_id' => [
+                'selectModel',
+                'modelClass' => Service::class,
+                'valueField' => 'id',
+                'labelField' => 'title',
+            ],
+            'benefit_id' => [
+                'selectModel',
+                'modelClass' => Benefit::class,
+                'valueField' => 'id',
+                'labelField' => 'title',
+            ]
         ];
     }
 
@@ -69,8 +81,8 @@ class Servicebenefit extends NgRestModel
     public function ngRestScopes()
     {
         return [
-            ['list', ['']],
-            [['create', 'update'], ['']],
+            ['list', ['service_id', 'benefit_id']],
+            [['create', 'update'], ['service_id', 'benefit_id']],
             ['delete', false],
         ];
     }

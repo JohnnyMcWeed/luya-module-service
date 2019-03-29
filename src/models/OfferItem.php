@@ -1,5 +1,4 @@
 <?php
-
 namespace johnnymcweed\service\models;
 
 use johnnymcweed\service\admin\Module;

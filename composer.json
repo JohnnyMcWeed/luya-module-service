@@ -15,7 +15,7 @@
     "issues": "https://github.com/JohnnyMcWeed/luya-module-service/issues"
   },
   "require": {
-    "creocoder/yii2-nested-sets": "0.9.*"
+    "netfant/luya-category": "dev-master",
   },
   "autoload" : {
     "psr-4" : {

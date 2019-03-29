@@ -1,10 +1,5 @@
 <?php
-
 namespace johnnymcweed\service\admin;
-
-// Todo: Add slugs
-// Todo: Add SEO
-// Todo: Add "cart"
 
 /**
  * Service Admin Module.
@@ -13,6 +8,7 @@ namespace johnnymcweed\service\admin;
  */
 class Module extends \luya\admin\base\Module
 {
+
     public $apis = [
         'api-service-service' => 'johnnymcweed\service\admin\apis\ServiceController',
         'api-service-isrelatedto' => 'johnnymcweed\service\admin\apis\IsRelatedToController',
@@ -26,8 +22,16 @@ class Module extends \luya\admin\base\Module
 
         'api-service-benefit' => 'johnnymcweed\service\admin\apis\BenefitController',
         'api-service-servicebenefit' => 'johnnymcweed\service\admin\apis\ServicebenefitController',
+
+        'api-service-faq' => 'johnnymcweed\service\admin\apis\FaqController',
+        'api-service-servicefaq' => 'johnnymcweed\service\admin\apis\ServicefaqController',
+        'api-service-story' => 'johnnymcweed\service\admin\apis\StoryController',
+        'api-service-servicestory' => 'johnnymcweed\service\admin\apis\ServicestoryController',
     ];
 
+    /**
+     * @return array|\luya\admin\components\AdminMenuBuilder|\luya\admin\components\AdminMenuBuilderInterface
+     */
     public function getMenu()
     {
         return (new \luya\admin\components\AdminMenuBuilder($this))
@@ -41,10 +45,15 @@ class Module extends \luya\admin\base\Module
             ->itemApi(self::t('Offer Bundle Offer Item'), 'serviceadmin/offer-bundle-offer-item/index', 'label', 'api-service-offerbundleofferitem', ['hiddenInMenu' => true])
             ->itemApi(self::t('OfferItemService'), 'serviceadmin/offer-item-service/index', 'label', 'api-service-offeritemservice', ['hiddenInMenu' => true])
             ->itemApi(self::t('OfferBundleService'), 'serviceadmin/offer-bundle-service/index', 'label', 'api-service-offerbundleservice', ['hiddenInMenu' => true])
-            ->itemApi(self::t('Benefit'), 'serviceadmin/benefit/index', 'label', 'api-service-benefit')
-            ->itemApi(self::t('Servicebenefit'), 'serviceadmin/servicebenefit/index', 'label', 'api-service-servicebenefit')
+            ->itemApi(self::t('Benefit'), 'serviceadmin/benefit/index', 'filter_vintage', 'api-service-benefit')
+            ->itemApi(self::t('Servicebenefit'), 'serviceadmin/servicebenefit/index', 'label', 'api-service-servicebenefit', ['hiddenInMenu' => true])
+            ->itemApi(self::t('Faq'), 'serviceadmin/faq/index', 'question_answer', 'api-service-faq')
+            ->itemApi(self::t('Faq'), 'serviceadmin/servicefaq/index', 'label', 'api-service-servicefaq', ['hiddenInMenu' => true])
+            ->itemApi(self::t('Story'), 'serviceadmin/story/index', 'speaker_notes', 'api-service-story')
+            ->itemApi(self::t('Servicestory'), 'serviceadmin/servicestory/index', 'label', 'api-service-servicestory', ['hiddenInMenu' => true])
             ->itemRoute(self::t('Calculator'), 'serviceadmin/calculator/index', 'format_list_numbered');
     }
+
 
     public static function onLoad()
     {
@@ -63,12 +72,5 @@ class Module extends \luya\admin\base\Module
     public static function t($message, array $params = [])
     {
         return parent::baseT('serviceadmin', $message, $params);
-    }
-
-    public function getAdminAssets()
-    {
-        return [
-            'johnnymcweed\service\admin\assets\CalculatorAsset'
-        ];
     }
 }

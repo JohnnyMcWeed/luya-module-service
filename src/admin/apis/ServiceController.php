@@ -2,6 +2,8 @@
 
 namespace johnnymcweed\service\admin\apis;
 
+use netfant\category\admin\NestedSetApiControllerTrait;
+
 /**
  * Service Controller.
  * 
@@ -9,6 +11,8 @@ namespace johnnymcweed\service\admin\apis;
  */
 class ServiceController extends \luya\admin\ngrest\base\Api
 {
+    use NestedSetApiControllerTrait;
+
     /**
      * @var string The path to the model which is the provider for the rules and fields.
      */
