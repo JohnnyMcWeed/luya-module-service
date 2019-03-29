@@ -10,8 +10,8 @@ use luya\web\Controller;
 
 class DefaultController extends Controller
 {
-    const TYPE_ROOT = 1;
-    const TYPE_SERVICE = 2;
+    const TYPE_ROOT = 'root';
+    const TYPE_SERVICE = 'service';
 
     /*
      * Default list view
@@ -31,9 +31,13 @@ class DefaultController extends Controller
             if (!empty($services = Service::find()->where(['like', 'slug', 'root'])->all())) {
                 if (count($services) !== 1) {
                     foreach ($services as $serv) {
-                        $parents = $service->parents();
+
+
+
 
                         // Todo: Check if it is the right one
+                        $parents = $service->parents();
+
                         $type = self::TYPE_SERVICE;
                         $service = $serv;
                     }
@@ -52,8 +56,7 @@ class DefaultController extends Controller
             }
         }
 
-        return $this->render('index', [
-            'type' => $type,
+        return $this->render($type, [
             'service' => $service
         ]);
     }

@@ -8,25 +8,26 @@ class m171115_165900_service_basetables extends Migration
     {
         $this->createTable('service_service', [
             'id' => $this->primaryKey(),
-            'title' => $this->text()->notNull(),
+            'title' => $this->string()->notNull(),
             'tree' => $this->integer(),
             'lft' => $this->integer()->notNull(),
             'rgt' => $this->integer()->notNull(),
             'depth' => $this->integer()->notNull(),
-            'text' => $this->text(),
             'teaser_text' => $this->text(),
-            //'parent_id' => $this->integer(11)->defaultValue(0),
+
+            'intro' => $this->string(),
+            'intro_button' => $this->string(),
+            'intro_button_link' => $this->string(),
+            'intro_image' => $this->integer(11)->defaultValue(0),
+
+            'text' => $this->text(),
+
             'slug' => $this->string(),
             'seo_title' => $this->string(),
             'seo_description' => $this->string(),
-            'logo_id' => $this->integer(11)->defaultValue(0),
-            'image_id' => $this->integer(11)->defaultValue(0),
+
             'image_list' => $this->text(),
             'file_list' => $this->text(),
-
-//            'lft' => $this->integer()->notNull(),
-//            'rgt' => $this->integer()->notNull(),
-//            'depth' => $this->integer()->notNull(),
 
             'create_user_id' => $this->integer(11)->defaultValue(0),
             'update_user_id' => $this->integer(11)->defaultValue(0),

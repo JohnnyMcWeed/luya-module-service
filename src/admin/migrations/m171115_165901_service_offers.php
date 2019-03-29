@@ -15,6 +15,7 @@ class m171115_165901_service_offers extends Migration
             'discount_from' => $this->integer(11)->defaultValue(0),
             'discount_until' => $this->integer(11)->defaultValue(0),
             'is_discount' => $this->boolean()->defaultValue(false),
+
             'create_user_id' => $this->integer(11)->defaultValue(0),
             'update_user_id' => $this->integer(11)->defaultValue(0),
             'timestamp_create' => $this->integer(11)->defaultValue(0),
@@ -35,6 +36,7 @@ class m171115_165901_service_offers extends Migration
             'discount_from' => $this->integer(11)->defaultValue(0),
             'discount_until' => $this->integer(11)->defaultValue(0),
             'is_discount' => $this->boolean()->defaultValue(false),
+
             'create_user_id' => $this->integer(11)->defaultValue(0),
             'update_user_id' => $this->integer(11)->defaultValue(0),
             'timestamp_create' => $this->integer(11)->defaultValue(0),

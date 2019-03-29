@@ -22,6 +22,7 @@ class m190106_130746_base_service_faq_and_stories_tables extends Migration
             'service_id' => $this->integer()->notNull(),
             'faq_id' => $this->integer()->notNull(),
         ]);
+        $this->addPrimaryKey('pk_serviceFaq', 'service_serviceFaq', ['service_id', 'faq_id']);
         $this->createTable('service_story', [
             'id' => $this->primaryKey(),
             'title' => $this->string()->notNull(),
@@ -31,6 +32,7 @@ class m190106_130746_base_service_faq_and_stories_tables extends Migration
             'service_id' => $this->integer()->notNull(),
             'story_id' => $this->integer()->notNull(),
         ]);
+        $this->addPrimaryKey('pk_serviceStory', 'service_serviceStory', ['service_id', 'story_id']);
     }
 
     /**
