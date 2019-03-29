@@ -1,8 +1,8 @@
 <?php
 namespace johnnymcweed\service\models;
 
+use netfant\category\models\NestedSetActiveQuery;
 use netfant\category\models\NestedSetModelBehavior;
-use netfant\category\models\NestedSetsActiveQuery;
 use Yii;
 use luya\admin\ngrest\base\NgRestModel;
 use luya\admin\ngrest\plugins\CheckboxRelationActiveQuery;
@@ -97,7 +97,7 @@ class Service extends NgRestModel
 
     public static function find()
     {
-        return new NestedSetsActiveQuery(get_called_class());
+        return new NestedSetActiveQuery(get_called_class());
     }
 
     /**

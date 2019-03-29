@@ -1,8 +1,7 @@
 {
   "name": "johnnymcweed/luya-module-service",
-  "description": "WIP! - The service module will provide you a basic system to show your services and link each over. Moreover there is an adjustable service calculator coming",
+  "description": "WIP: The service module will provide you a basic system to show your services and link each over. Moreover there is an adjustable service calculator coming",
   "type": "luya-module",
-  "minimum-stability": "stable",
   "keywords": ["php", "yii", "yii2", "luya", "luya-module", "module", "service"],
   "license": "MIT",
   "authors": [
