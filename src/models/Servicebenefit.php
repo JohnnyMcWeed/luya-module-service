@@ -50,7 +50,6 @@ class Servicebenefit extends NgRestModel
         return [
             [['service_id', 'benefit_id'], 'required'],
             [['service_id', 'benefit_id'], 'integer'],
-            [['service_id', 'benefit_id'], 'unique', 'targetAttribute' => ['service_id', 'benefit_id']],
         ];
     }
 

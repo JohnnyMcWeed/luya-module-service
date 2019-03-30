@@ -46,6 +46,7 @@ class Story extends NgRestModel
             'id' => Yii::t('app', 'ID'),
             'title' => Yii::t('app', 'Title'),
             'story' => Yii::t('app', 'Story'),
+//            'image_id' => Yii::t('app', 'Image'),
         ];
     }
 
@@ -55,7 +56,7 @@ class Story extends NgRestModel
     public function rules()
     {
         return [
-            [['title', 'story'], 'required'],
+//            [['image_id'], 'integer'],
             [['title', 'story'], 'string'],
         ];
     }
@@ -66,8 +67,13 @@ class Story extends NgRestModel
     public function ngRestAttributeTypes()
     {
         return [
-            'title' => 'textarea',
+            'title' => 'text',
             'story' => 'textarea',
+//            'image_id' => [
+//                'image',
+//                'imageItem' => true,
+//                'filter' => false
+//            ]
         ];
     }
 

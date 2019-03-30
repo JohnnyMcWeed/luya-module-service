@@ -2,6 +2,7 @@
 
 namespace johnnymcweed\service\models;
 
+use johnnymcweed\service\admin\Module;
 use Yii;
 use luya\admin\ngrest\base\NgRestModel;
 
@@ -37,8 +38,8 @@ class Servicestory extends NgRestModel
     public function attributeLabels()
     {
         return [
-            'service_id' => Yii::t('app', 'Service'),
-            'story_id' => Yii::t('app', 'Story'),
+            'service_id' => Module::t('Service'),
+            'story_id' => Module::t('Story'),
         ];
     }
 
@@ -59,8 +60,18 @@ class Servicestory extends NgRestModel
     public function ngRestAttributeTypes()
     {
         return [
-            'service_id' => 'number',
-            'story_id' => 'number',
+            'service_id' => [
+                'selectModel',
+                'modelClass' => Service::class,
+                'valueField' => 'id',
+                'labelField' => 'title',
+            ],
+            'story_id' => [
+                'selectModel',
+                'modelClass' => Story::class,
+                'valueField' => 'id',
+                'labelField' => 'title',
+            ],
         ];
     }
 

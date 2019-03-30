@@ -26,7 +26,8 @@ class m190106_130746_base_service_faq_and_stories_tables extends Migration
         $this->createTable('service_story', [
             'id' => $this->primaryKey(),
             'title' => $this->string()->notNull(),
-            'story' => $this->text()->notNull()
+            'story' => $this->text()->notNull(),
+            'image_id' => $this->integer(11)->defaultValue(0),
         ]);
         $this->createTable('service_serviceStory', [
             'service_id' => $this->integer()->notNull(),

@@ -32,11 +32,13 @@ use johnnymcweed\service\admin\Module;
  */
 class Service extends NgRestModel
 {
-    public $offerItems = [],
+    public $benefits = [],
+        $offerItems = [],
         $offerBundles = [],
+        $stories = [],
+        $faq = [],
         $isSimilarTo = [],
-        $isRelatedTo = [],
-        $faq = [];
+        $isRelatedTo = [];
 
     /**
      * @inheritdoc
@@ -57,19 +59,6 @@ class Service extends NgRestModel
     public static function ngRestApiEndpoint()
     {
         return 'api-service-service';
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function scenarios()
-    {
-        $scenarios = parent::scenarios();
-        $scenarios['restcreate'][] = 'operation';
-        $scenarios['restcreate'][] = 'operationItem';
-        $scenarios['restupdate'][] = 'operation';
-        $scenarios['restupdate'][] = 'operationItem';
-        return $scenarios;
     }
 
     /**
@@ -148,12 +137,19 @@ class Service extends NgRestModel
             'depth' => Yii::t('app', 'Depth'),
             'operation' => Yii::t('app', 'Operation'),
             'operationItem' => Yii::t('app', 'Item'),
-
-            'text' => Module::t('Description'),
             'teaser_text' => Module::t('Teaser Text'),
             'slug' => Module::t('Slug'),
             'seo_title' => Module::t('Title'),
             'seo_description' => Module::t('Description'),
+            'intro' => Module::t('Intro'),
+            'intro_button' => Module::t('Intro Button'),
+            'intro_button_link' => Module::t('Intro Button Link'),
+            'intro_image' => Module::t('Intro Image'),
+            'text' => Module::t('Description'),
+            'benefits' => Module::t('Benefits'),
+            'offerItemsCount' => Module::t('Items'),
+            'offerBundlesCount' => Module::t('Bundles'),
+            'stories' => Module::t('Stories'),
             'image_id' => Module::t( 'Image'),
             'logo_id' => Module::t( 'Logo'),
             'image_list' => Module::t( 'Images'),
@@ -162,8 +158,6 @@ class Service extends NgRestModel
             'timestamp_display_from' => Module::t( 'Display From'),
             'timestamp_display_until' => Module::t( 'Display Until'),
             'is_display_limit' => Module::t( 'Is Display Limit'),
-            'offerItemsCount' => Module::t('Items'),
-            'offerBundlesCount' => Module::t('Bundles'),
             'faq' => Module::t('FAQ\'s')
         ];
     }
@@ -174,9 +168,9 @@ class Service extends NgRestModel
     public function rules()
     {
         return [
-            [['title', 'text', 'teaser_text', 'slug', 'seo_title', 'seo_description', 'image_list', 'file_list'], 'string'],
-            [['create_user_id', 'update_user_id', 'timestamp_create', 'timestamp_update', 'timestamp_display_from', 'timestamp_display_until'], 'integer'],
-            [['logo_id', 'image_id', 'offerItems', 'offerBundles', 'isSimilarTo', 'isRelatedTo', 'faq'], 'safe'],
+            [['title', 'teaser_text', 'text', 'intro', 'intro_button', 'intro_button_link',  'slug', 'seo_title', 'seo_description', 'image_list', 'file_list', 'operation'], 'string'],
+            [['create_user_id', 'update_user_id', 'timestamp_create', 'timestamp_update', 'timestamp_display_from', 'timestamp_display_until', 'operationItem'], 'integer'],
+            [['intro_image', 'offerItems', 'offerBundles', 'isSimilarTo', 'isRelatedTo', 'stories', 'benefits', 'faq'], 'safe'],
             [['is_display_limit'], 'boolean'],
             [['title'], 'string', 'max' => 150],
         ];
@@ -197,7 +191,7 @@ class Service extends NgRestModel
     {
         return [
             'title' => 'text',
-            'text' => 'textarea',
+            'text' => 'html',
             'teaser_text' => 'textarea',
             'lft' => 'number',
             'rgt' => 'number',
@@ -205,12 +199,10 @@ class Service extends NgRestModel
             'slug' => ['slug', 'listener' => 'title'],
             'seo_title' => 'text',
             'seo_description' => 'textarea',
-            'image_id' => [
-                'image',
-                'imageItem' => true,
-                'filter' => false
-            ],
-            'logo_id' => [
+            'intro' => 'textarea',
+            'intro_button' => 'text',
+            'intro_button_link' => 'link',
+            'intro_image' =>[
                 'image',
                 'imageItem' => true,
                 'filter' => false
@@ -231,13 +223,17 @@ class Service extends NgRestModel
     public function ngRestAttributeGroups()
     {
         return [
-            [['operation', 'operationItem'], 'Category', 'collapsed' => false],
-            [['isSimilarTo', 'isRelatedTo'], Module::t('Service Relations'), 'collapsed'=> true ],
+            [['operation', 'operationItem'], 'Category', 'collapsed' => true],
             [['slug', 'seo_title', 'seo_description'], Module::t('SEO'), 'collapsed' => true],
-            [['logo_id', 'image_id', 'image_list', 'file_list'], Module::t('Media'), 'collapsed' => true],
+            [['intro', 'intro_button', 'intro_button_link', 'intro_image'], Module::t('Intro'), 'collapsed' => true],
+            [['text'], Module::t('Description'), 'collapsed' => true],
+            [['benefits'], Module::t('Benetifs'), 'collapsed' => true],
             [['offerItems', 'offerBundles'], Module::t('Offers'), 'collapsed' => true],
+            [['stories'], Module::t('Stories'), 'collapsed' => true],
+            [['faq'], Module::t('FAQs'), 'collapsed' => true],
+            [['isSimilarTo', 'isRelatedTo'], Module::t('Service Relations'), 'collapsed'=> true ],
+            [['image_list', 'file_list'], Module::t('Media'), 'collapsed' => true],
             [['timestamp_create', 'timestamp_display_from', 'timestamp_display_until', 'is_display_limit'], Module::t('Time'), 'collapsed' => true],
-            [['faq'], Module::t('FAQ\'s'), 'collapsed' => true],
         ];
     }
 
@@ -248,7 +244,7 @@ class Service extends NgRestModel
     {
         return [
             ['list', ['title', 'lft', 'rgt', 'depth', 'offerItemsCount', 'offerBundlesCount']],
-            [['create', 'update'], ['title', 'operation', 'operationItem', 'text', 'teaser_text', 'slug', 'seo_title', 'seo_description', 'image_id', 'logo_id', 'image_list', 'file_list', 'isRelatedTo', 'isSimilarTo', 'timestamp_display_from', 'timestamp_display_until', 'is_display_limit', 'offerItems', 'offerBundles', 'faq']],
+            [['create', 'update'], ['title', 'operation', 'operationItem', 'intro', 'intro_button', 'intro_button_link', 'intro_image', 'text', 'teaser_text', 'slug', 'seo_title', 'seo_description', 'image_list', 'file_list', 'isRelatedTo', 'isSimilarTo', 'timestamp_display_from', 'benefits', 'timestamp_display_until', 'is_display_limit', 'offerItems', 'offerBundles', 'stories', 'faq']],
             ['delete', true],
         ];
     }
@@ -261,14 +257,15 @@ class Service extends NgRestModel
         return [
             'operation',
             'operationItem',
-
+            'benefits',
             'offerItemsCount',
             'offerBundlesCount',
             'offerItems',
             'offerBundles',
+            'stories',
+            'faq',
             'isRelatedTo',
             'isSimilarTo',
-            'faq'
         ];
     }
 
@@ -295,6 +292,11 @@ class Service extends NgRestModel
                 'labelField' => 'title',
             ],
 
+            'benefits' => [
+                'class' => CheckboxRelationActiveQuery::class,
+                'query' => $this->getBenefits(),
+                'labelField' => ['title']
+            ],
             'offerItemsCount' => 'number',
             'offerBundlesCount' => 'number',
             'offerItems' => [
@@ -307,14 +309,19 @@ class Service extends NgRestModel
                 'query' => $this->getOfferBundles(),
                 'labelField' => ['title', 'price']
             ],
+            'stories' => [
+                'class' => CheckboxRelationActiveQuery::class,
+                'query' => $this->getStories(),
+                'labelField' => ['id', 'title']
+            ],
             'isRelatedTo' => [
                 'class' => CheckboxRelationActiveQuery::class,
-                'query' => $this->getIsRelatedTo(),
+                'query' => $this->getRelated(),
                 'labelField' => ['title']
             ],
             'isSimilarTo' => [
                 'class' => CheckboxRelationActiveQuery::class,
-                'query' => $this->getIsSimilarTo(),
+                'query' => $this->getSimilar(),
                 'labelField' => ['title']
             ],
             'faq' => [
@@ -342,7 +349,22 @@ class Service extends NgRestModel
      */
     public function getDetailUrl()
     {
-        return Url::toRoute(['/service/default/detail', 'id' => $this->id, 'slug' => $this->slug]);
+        return Url::toRoute(['/service/default/index', 'slug' => $this->slug]); // Todo: Build detail url slug...
+    }
+
+    /**
+     * Get the service's benefits
+     *
+     * @return $this
+     */
+    public function getBenefits()
+    {
+        return $this->hasMany(Benefit::class, ['id' => 'benefit_id'])->viaTable(Servicebenefit::tableName(), ['service_id' => 'id']);
+    }
+
+    public function getStories()
+    {
+        return $this->hasMany(Story::class, ['id' => 'story_id'])->viaTable(Servicestory::tableName(), ['service_id' => 'id']);
     }
 
     /**
@@ -390,7 +412,7 @@ class Service extends NgRestModel
      *
      * @return $this
      */
-    public function getIsSimilarTo()
+    public function getSimilar()
     {
         return $this->hasMany(Service::class, ['id' => 'similar_service_id'])->viaTable( IsSimilarTo::tableName(), ['service_id' => 'id']);
     }
@@ -400,7 +422,7 @@ class Service extends NgRestModel
      *
      * @return $this
      */
-    public function getIsRelatedTo()
+    public function getRelated()
     {
         return $this->hasMany(Service::class, ['id' => 'relation_service_id'])->viaTable( IsRelatedTo::tableName(), ['service_id' => 'id']);
     }
