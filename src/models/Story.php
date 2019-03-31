@@ -46,7 +46,7 @@ class Story extends NgRestModel
             'id' => Yii::t('app', 'ID'),
             'title' => Yii::t('app', 'Title'),
             'story' => Yii::t('app', 'Story'),
-//            'image_id' => Yii::t('app', 'Image'),
+            'image_id' => Yii::t('app', 'Image'),
         ];
     }
 
@@ -58,6 +58,7 @@ class Story extends NgRestModel
         return [
 //            [['image_id'], 'integer'],
             [['title', 'story'], 'string'],
+            [['image_id'], 'integer'],
         ];
     }
 
@@ -69,11 +70,11 @@ class Story extends NgRestModel
         return [
             'title' => 'text',
             'story' => 'textarea',
-//            'image_id' => [
-//                'image',
-//                'imageItem' => true,
-//                'filter' => false
-//            ]
+            'image_id' => [
+                'image',
+                'imageItem' => true,
+                'filter' => false
+            ]
         ];
     }
 
@@ -84,7 +85,7 @@ class Story extends NgRestModel
     {
         return [
             ['list', ['title', 'story']],
-            [['create', 'update'], ['title', 'story']],
+            [['create', 'update'], ['title', 'story', 'image_id']],
             ['delete', false],
         ];
     }

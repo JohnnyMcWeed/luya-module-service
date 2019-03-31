@@ -13,7 +13,9 @@ class m171115_165900_service_basetables extends Migration
             'lft' => $this->integer()->notNull(),
             'rgt' => $this->integer()->notNull(),
             'depth' => $this->integer()->notNull(),
+
             'teaser_text' => $this->text(),
+            'teaser_image' => $this->integer(11)->defaultValue(0),
 
             'intro' => $this->text(),
             'intro_button' => $this->string(),

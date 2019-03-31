@@ -7,6 +7,7 @@ use luya\news\models\Cat;
 use Yii;
 use yii\data\ActiveDataProvider;
 use luya\web\Controller;
+use yii\data\Sort;
 
 class DefaultController extends Controller
 {
@@ -14,7 +15,7 @@ class DefaultController extends Controller
     const TYPE_SERVICE = 'service';
 
     /*
-     * Default list view
+     * Default views
      */
     public function actionIndex($slugs = null)
     {
@@ -28,36 +29,56 @@ class DefaultController extends Controller
             }
         } else {
             $params = explode('/', $slugs);
-            if (!empty($services = Service::find()->where(['like', 'slug', 'root'])->all())) {
+            if (!empty($services = Service::find()->where(['like', 'slug', $params[count($params)-1]])->all())) {
                 if (count($services) !== 1) {
                     foreach ($services as $serv) {
-
-
-
-
-                        // Todo: Check if it is the right one
-                        $parents = $service->parents();
-
-                        $type = self::TYPE_SERVICE;
-                        $service = $serv;
+                        if ($this->checkService($serv, $params)) {
+                            $type = self::TYPE_SERVICE;
+                            $service = $serv;
+                            break;
+                        }
                     }
                 } else {
-
-                    // Todo: Check if it is the right one
-                    $type = self::TYPE_SERVICE;
-                    $service = $service[0];
+                    if ($this->checkService($services[0], $params)) {
+                        $type = self::TYPE_SERVICE;
+                        $service = $services;
+                    }
                 }
-
-
-            } else {
-                // Todo: Go to 404 page
-                $type = null;
-                $service = null;
             }
         }
 
-        return $this->render($type, [
-            'service' => $service
+        if (empty($type)) {
+            // Todo: Go to 404 page
+
+        } else {
+            return $this->render($type, [
+                'service' => $service
+            ]);
+        }
+    }
+
+    /**
+     * Checks whether it's the correct service
+     *
+     * Returns true if it is the correct one.
+     *
+     * @param $service
+     * @param $params
+     *
+     * @return $theService Boolean Whether it's the service or not
+     */
+    private function checkService($service, $params)
+    {
+        $theService = false;
+
+        $sort = new Sort([
+            'attributes' => [
+                'rgt' => SORT_DESC
+            ]
         ]);
+//        var_dump($params);
+//        var_dump($service->parents()->orderBy($sort->orders)->all());
+
+        return $theService;
     }
 }

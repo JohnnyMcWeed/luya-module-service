@@ -138,6 +138,7 @@ class Service extends NgRestModel
             'operation' => Yii::t('app', 'Operation'),
             'operationItem' => Yii::t('app', 'Item'),
             'teaser_text' => Module::t('Teaser Text'),
+            'teaser_image' => Module::t('Teaser Image'),
             'slug' => Module::t('Slug'),
             'seo_title' => Module::t('Title'),
             'seo_description' => Module::t('Description'),
@@ -170,7 +171,7 @@ class Service extends NgRestModel
         return [
             [['title', 'teaser_text', 'text', 'intro', 'intro_button', 'intro_button_link',  'slug', 'seo_title', 'seo_description', 'image_list', 'file_list', 'operation'], 'string'],
             [['create_user_id', 'update_user_id', 'timestamp_create', 'timestamp_update', 'timestamp_display_from', 'timestamp_display_until', 'operationItem'], 'integer'],
-            [['intro_image', 'offerItems', 'offerBundles', 'isSimilarTo', 'isRelatedTo', 'stories', 'benefits', 'faq'], 'safe'],
+            [['intro_image', 'teaser_image', 'offerItems', 'offerBundles', 'isSimilarTo', 'isRelatedTo', 'stories', 'benefits', 'faq'], 'safe'],
             [['is_display_limit'], 'boolean'],
             [['title'], 'string', 'max' => 150],
         ];
@@ -207,6 +208,11 @@ class Service extends NgRestModel
                 'imageItem' => true,
                 'filter' => false
             ],
+            'teaser_image' =>[
+                'image',
+                'imageItem' => true,
+                'filter' => false
+            ],
             'image_list' => 'imageArray',
             'file_list' => 'fileArray',
             'timestamp_create' => 'datetime',
@@ -225,6 +231,7 @@ class Service extends NgRestModel
         return [
             [['operation', 'operationItem'], 'Category', 'collapsed' => true],
             [['slug', 'seo_title', 'seo_description'], Module::t('SEO'), 'collapsed' => true],
+            [['teaser_text', 'teaser_image'], 'Teaser', 'collapsed' => true],
             [['intro', 'intro_button', 'intro_button_link', 'intro_image'], Module::t('Intro'), 'collapsed' => true],
             [['text'], Module::t('Description'), 'collapsed' => true],
             [['benefits'], Module::t('Benetifs'), 'collapsed' => true],
@@ -244,7 +251,7 @@ class Service extends NgRestModel
     {
         return [
             ['list', ['title', 'lft', 'rgt', 'depth', 'offerItemsCount', 'offerBundlesCount']],
-            [['create', 'update'], ['title', 'operation', 'operationItem', 'intro', 'intro_button', 'intro_button_link', 'intro_image', 'text', 'teaser_text', 'slug', 'seo_title', 'seo_description', 'image_list', 'file_list', 'isRelatedTo', 'isSimilarTo', 'timestamp_display_from', 'benefits', 'timestamp_display_until', 'is_display_limit', 'offerItems', 'offerBundles', 'stories', 'faq']],
+            [['create', 'update'], ['title', 'operation', 'operationItem', 'intro', 'intro_button', 'intro_button_link', 'intro_image', 'text', 'teaser_text', 'teaser_image', 'slug', 'seo_title', 'seo_description', 'image_list', 'file_list', 'isRelatedTo', 'isSimilarTo', 'timestamp_display_from', 'benefits', 'timestamp_display_until', 'is_display_limit', 'offerItems', 'offerBundles', 'stories', 'faq']],
             ['delete', true],
         ];
     }
@@ -347,9 +354,14 @@ class Service extends NgRestModel
      *
      * @return string
      */
-    public function getDetailUrl()
+    public function getServiceUrl()
     {
-        return Url::toRoute(['/service/default/index', 'slug' => $this->slug]); // Todo: Build detail url slug...
+        return Url::toRoute(['/service/default/index', 'slugs' => $this->slug]); // Todo: Build detail url slug...
+    }
+
+    public function getRootsUrl()
+    {
+        // Todo: Get roots url
     }
 
     /**

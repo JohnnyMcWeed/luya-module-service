@@ -37,21 +37,21 @@ class Module extends \luya\base\Module
         [
             'pattern' => 'service',
             'route' => 'service/default/index',
-            'composition' => [
-                'en' => 'service',
-                'de' => 'leistung',
-                'fr' => 'service'
-            ]
+//            'composition' => [
+//                'en' => 'service',
+//                'de' => 'leistung',
+//                'fr' => 'service'
+//            ]
         ],
         [
             'pattern' => 'service/<slugs:.*>/',
             'route' => 'service/default/index',
             'encodeParams' => false,
-            'composition' => [
-                'en' => 'service/<slugs:.*>/',
-                'de' => 'leistung/<slugs:.*>/',
-                'fr' => 'service/<slugs:.*>/'
-            ]
+//            'composition' => [
+//                'en' => 'service/<slugs:.*>/',
+//                'de' => 'leistung/<slugs:.*>/',
+//                'fr' => 'service/<slugs:.*>/'
+//            ]
         ],
 
 //        [
