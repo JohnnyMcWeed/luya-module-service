@@ -1,6 +1,7 @@
 <?php
 namespace johnnymcweed\service\models;
 
+use johnnymcweed\service\frontend\components\UrlRule;
 use netfant\category\models\NestedSetActiveQuery;
 use netfant\category\models\NestedSetModelBehavior;
 use Yii;
@@ -191,6 +192,7 @@ class Service extends NgRestModel
     public function ngRestAttributeTypes()
     {
         return [
+            'id' => 'number',
             'title' => 'text',
             'text' => 'html',
             'teaser_text' => 'textarea',
@@ -356,7 +358,7 @@ class Service extends NgRestModel
      */
     public function getServiceUrl()
     {
-        return Url::toRoute(['/service/default/index', 'slugs' => $this->slug]); // Todo: Build detail url slug...
+        return Url::toRoute(['/'.UrlRule::ROUTE_SERVICE, 'id' => $this->id]);
     }
 
     public function getRootsUrl()

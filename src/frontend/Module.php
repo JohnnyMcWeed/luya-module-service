@@ -35,51 +35,17 @@ class Module extends \luya\base\Module
      */
     public $urlRules = [
         [
-            'pattern' => 'service',
-            'route' => 'service/default/index',
-//            'composition' => [
-//                'en' => 'service',
-//                'de' => 'leistung',
-//                'fr' => 'service'
-//            ]
-        ],
-        [
-            'pattern' => 'service/<slugs:.*>/',
-            'route' => 'service/default/index',
-            'encodeParams' => false,
-//            'composition' => [
-//                'en' => 'service/<slugs:.*>/',
-//                'de' => 'leistung/<slugs:.*>/',
-//                'fr' => 'service/<slugs:.*>/'
-//            ]
-        ],
-
+            'pattern' => 'test-page/cat/<slug:.*>',
+            'route' => 'service/default/service',
+        ]
 //        [
-//            'pattern' => 'service/<slug:[a-zA-Z0-9\-]+>/',
-//            'route' => 'service/default/detail',
+//            'class' => 'johnnymcweed\service\frontend\components\UrlRule',
+//            'pattern' => 'test-page/cat/<slug:.*>',
+//            'route' => 'service/default/service',
 //            'composition' => [
-//                'en' => 'service/<id:\d+>/<slug:[a-zA-Z0-9\-]+>/',
-//                'de' => 'leistung/<id:\d+>/<slug:[a-zA-Z0-9\-]+>/',
-//                'fr' => 'service/<id:\d+>/<slug:[a-zA-Z0-9\-]+>/'
-//            ]
-//        ],
-
-//        [
-//            'pattern' => 'service/offer-calculator',
-//            'route' => 'service/default/calculator',
-//            'composition' => [
-//                'en' => 'service/calculation',
-//                'de' => 'leistung/rechner',
-//                'fr' => 'service'
-//            ]
-//        ],
-//        [
-//            'pattern' => 'service/cart',
-//            'route' => 'service/cart/index',
-//            'composition' => [
-//                'en' => 'service/calculation',
-//                'de' => 'leistung/korb',
-//                'fr' => 'service'
+//                'de' => '',
+//                'en' => '',
+//                'fr' => ''
 //            ]
 //        ],
     ];
