@@ -342,6 +342,14 @@ class Service extends NgRestModel
     }
 
     /**
+     * @inheritDoc
+     */
+    public function ngRestListOrder()
+    {
+        return ['id' => SORT_DESC];
+    }
+
+    /**
      * Get the service's main image
      *
      * @return bool|\luya\admin\image\Item
@@ -358,12 +366,19 @@ class Service extends NgRestModel
      */
     public function getServiceUrl()
     {
-        return Url::toRoute(['/'.UrlRule::ROUTE_SERVICE, 'id' => $this->id]);
+        return Url::toRoute(['service/default/service', 'id' => $this->id]);
     }
 
+    /**
+     * Get the roots url
+     *
+     * This url lists all roots
+     *
+     * @return string
+     */
     public function getRootsUrl()
     {
-        // Todo: Get roots url
+        return Url::to(['service/default/roots']);
     }
 
     /**
@@ -496,4 +511,5 @@ class Service extends NgRestModel
         }
         return false;
     }
+
 }
