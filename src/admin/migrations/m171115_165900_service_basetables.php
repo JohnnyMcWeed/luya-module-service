@@ -56,8 +56,8 @@ class m171115_165900_service_basetables extends Migration
             'similar_service_id' => $this->integer(),
         ]);
         $this->addPrimaryKey('pk_service_isSimilarTo', 'service_is_similar_to', ['service_id', 'similar_service_id']);
-        $this->addForeignKey('fk_isRelatedTo_service', 'service_is_similar_to', 'service_id', 'service_service', 'id');
-        $this->addForeignKey('fk_isRelatedTo_relationService', 'service_is_similar_to', 'similar_service_id', 'service_service', 'id');
+        $this->addForeignKey('fk_isSimilarTo_service', 'service_is_similar_to', 'service_id', 'service_service', 'id');
+        $this->addForeignKey('fk_isSimilarTo_similarService', 'service_is_similar_to', 'similar_service_id', 'service_service', 'id');
     }
 
     public function safeDown()

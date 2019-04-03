@@ -20,17 +20,6 @@ class RoutesBootstrap implements BootstrapInterface
 {
     public function bootstrap($app)
     {
-
-//
-
-//
-//        $rules = [];
-//
-//        var_dump($services);
-
-
-//        return $app;
-
         if ($app->hasModule('service')) {
             $app->on($app::EVENT_BEFORE_REQUEST, function ($event) {
                 if (!$event->sender->request->isConsoleRequest && !$event->sender->request->isAdmin) {
@@ -44,7 +33,6 @@ class RoutesBootstrap implements BootstrapInterface
                     ]);
                     $services = Service::find()->asArray()->all();
                     $routes = $this->buildRoute($services);
-                    var_dump($routes);
                 }
             });
         }
@@ -54,15 +42,16 @@ class RoutesBootstrap implements BootstrapInterface
     {
         $endServiceArray = [];
         if (!empty($serviceArray)) {
-            //var_dump($serviceArray[0]['depth']); exit;
             if (!empty($serviceArray[0]['depth']) ||
                 isset($serviceArray[0]['depth']) && (int) $serviceArray[0]['depth'] === 0 ) {
+
                 if ($serviceArray[0]['depth'] == 0)
                     $startLevel = 0;
                 else
                     $startLevel = $serviceArray[0]['depth'];
 
                 $helperArr = [];
+
                 foreach ($serviceArray as $serv) {
                     if ((int) $serv['depth'] === $startLevel) {
                         if (!empty($helperArr)) {
@@ -76,14 +65,16 @@ class RoutesBootstrap implements BootstrapInterface
                         $helperArr = $serv;
                     }
                 }
+
                 if (!empty($helperArr)) {
                     $c = count($endServiceArray);
+                    var_dump($endServiceArray);
                     $endServiceArray[$c-1]['children'] = $this->buildRoute($helperArr);
+                    var_dump($endServiceArray);
                 }
             };
 
         }
-//        var_dump($endServiceArray);
         return $endServiceArray;
     }
 }

@@ -25,8 +25,8 @@ class m181121_153536_benefits_table extends Migration
         ]);
 
         $this->addPrimaryKey('pk_servicebenefit', 'service_servicebenefit', ['service_id', 'benefit_id']);
-        $this->addForeignKey('fk_servicebenefit', 'service_servicebenefit', 'service_id', 'service_service', 'id');
-        $this->addForeignKey('fk_servicebenefit', 'service_servicebenefit', 'benefit_id', 'service_benefit', 'id');
+        $this->addForeignKey('fk_servicebenefit_service', 'service_servicebenefit', 'service_id', 'service_service', 'id');
+        $this->addForeignKey('fk_servicebenefit_benefit', 'service_servicebenefit', 'benefit_id', 'service_benefit', 'id');
     }
 
     /**
