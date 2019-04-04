@@ -34,7 +34,6 @@ use johnnymcweed\service\admin\Module;
  */
 class Service extends NgRestModel
 {
-    use SortableTrait;
     public $benefits = [],
         $offerItems = [],
         $offerBundles = [],
