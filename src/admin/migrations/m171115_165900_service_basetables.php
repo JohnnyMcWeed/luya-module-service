@@ -47,17 +47,17 @@ class m171115_165900_service_basetables extends Migration
             'relation_service_id' => $this->integer(),
         ]);
         $this->addPrimaryKey('pk_service_isRelatedTo', 'service_is_related_to', ['service_id', 'relation_service_id']);
-        $this->addForeignKey('fk_isRelatedTo_service', 'service_is_related_to', 'service_id', 'service_service', 'id');
-        $this->addForeignKey('fk_isRelatedTo_relationService', 'service_is_related_to', 'relation_service_id', 'service_service', 'id');
+        $this->addForeignKey('fk_isrelatedto_service', 'service_is_related_to', 'service_id', 'service_service', 'id');
+        $this->addForeignKey('fk_isrelatedto_relationService', 'service_is_related_to', 'relation_service_id', 'service_service', 'id');
 
 
         $this->createTable('service_is_similar_to', [
             'service_id' => $this->integer(),
             'similar_service_id' => $this->integer(),
         ]);
-        $this->addPrimaryKey('pk_service_isSimilarTo', 'service_is_similar_to', ['service_id', 'similar_service_id']);
-        $this->addForeignKey('fk_isRelatedTo_service', 'service_is_similar_to', 'service_id', 'service_service', 'id');
-        $this->addForeignKey('fk_isRelatedTo_relationService', 'service_is_similar_to', 'similar_service_id', 'service_service', 'id');
+        $this->addPrimaryKey('pk_service_issimilarto', 'service_is_similar_to', ['service_id', 'similar_service_id']);
+        $this->addForeignKey('fk_issimilarto_service', 'service_is_similar_to', 'service_id', 'service_service', 'id');
+        $this->addForeignKey('fk_issimilarto_similarservice', 'service_is_similar_to', 'similar_service_id', 'service_service', 'id');
     }
 
     public function safeDown()
