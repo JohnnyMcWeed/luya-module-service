@@ -2,6 +2,7 @@
 namespace johnnymcweed\service\models;
 
 use johnnymcweed\service\frontend\components\UrlRule;
+use luya\admin\traits\SortableTrait;
 use netfant\category\models\NestedSetActiveQuery;
 use netfant\category\models\NestedSetModelBehavior;
 use Yii;
@@ -33,6 +34,7 @@ use johnnymcweed\service\admin\Module;
  */
 class Service extends NgRestModel
 {
+    use SortableTrait;
     public $benefits = [],
         $offerItems = [],
         $offerBundles = [],
@@ -342,14 +344,6 @@ class Service extends NgRestModel
     }
 
     /**
-     * @inheritDoc
-     */
-    public function ngRestListOrder()
-    {
-        return ['id' => SORT_DESC];
-    }
-
-    /**
      * Get the service's main image
      *
      * @return bool|\luya\admin\image\Item
@@ -366,7 +360,7 @@ class Service extends NgRestModel
      */
     public function getServiceUrl()
     {
-        return Url::toRoute(['service/default/service', 'id' => $this->id]);
+        return Url::toRoute(['/service/default/service', 'id' => $this->id]);
     }
 
     /**

@@ -35,18 +35,8 @@ class Module extends \luya\base\Module
      */
     public $urlRules = [
         [
-            'pattern' => '/test-page/cat/',
+            'pattern' => 'services',
             'route' => 'service/default/roots',
-        ],
-//        [
-//            'class' => 'johnnymcweed\service\frontend\components\UrlRule',
-//            'pattern' => 'test-page/cat/<slug:.*>',
-//            'route' => 'service/default/service',
-//            'composition' => [
-//                'de' => '',
-//                'en' => '',
-//                'fr' => ''
-//            ]
-//        ],
+        ]
     ];
 }

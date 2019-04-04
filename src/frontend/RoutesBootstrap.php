@@ -1,89 +1,75 @@
 <?php
-
 namespace johnnymcweed\service\frontend;
 
 use johnnymcweed\service\models\Service;
+use luya\helpers\Json;
 use yii\base\BootstrapInterface;
 use yii\data\Sort;
 
 /**
  * Service Bootstrap
  *
- *
- *
- * @author    Alexander Schmid <schmid@netfant.ch>
- * @copyright 2019 NetFant Schmid
+ * @author    Alexander Schmid <alex.schmid@stud.unibas.ch>
  * @version   1.0.0
  * @since     1.0.0
  */
 class RoutesBootstrap implements BootstrapInterface
 {
+    public $rulePrefix = 'services';
+
     public function bootstrap($app)
     {
-
-//
-
-//
-//        $rules = [];
-//
-//        var_dump($services);
-
-
-//        return $app;
-
         if ($app->hasModule('service')) {
             $app->on($app::EVENT_BEFORE_REQUEST, function ($event) {
                 if (!$event->sender->request->isConsoleRequest && !$event->sender->request->isAdmin) {
-
-                    $sort = new Sort([
-                        'attributes' => [
-                            'lft' => [
-                                'asc'
-                            ]
-                        ]
-                    ]);
-                    $services = Service::find()->asArray()->all();
-                    $routes = $this->buildRoute($services);
-                    var_dump($routes);
+                    $services = Service::find()->addOrderBy(['rgt' => SORT_DESC])->asArray()->all();
+                    $event->sender->urlManager->addRules($this->prepareRules($services, $this->rulePrefix));
                 }
             });
         }
     }
 
-    private function buildRoute($serviceArray)
+    /**
+     * Method to prepare the rules
+     *
+     * @param $serviceArray An array of service items
+     * @param null $prefix The prefix for the rule
+     *
+     * @return array The routes array for the config
+     */
+    private function prepareRules($serviceArray, $prefix = null)
     {
         $endServiceArray = [];
         if (!empty($serviceArray)) {
-            //var_dump($serviceArray[0]['depth']); exit;
             if (!empty($serviceArray[0]['depth']) ||
                 isset($serviceArray[0]['depth']) && (int) $serviceArray[0]['depth'] === 0 ) {
-                if ($serviceArray[0]['depth'] == 0)
-                    $startLevel = 0;
-                else
-                    $startLevel = $serviceArray[0]['depth'];
-
+                $startLevel = (int) $serviceArray[0]['depth'];
                 $helperArr = [];
+                $pattern = '';
                 foreach ($serviceArray as $serv) {
-                    if ((int) $serv['depth'] === $startLevel) {
+                    if ((int) $serv['depth'] > $startLevel) {
+                        $helperArr[] = $serv;
+                    } elseif ((int) $serv['depth'] === $startLevel) {
+                        $langSlug = Json::decode($serv['slug'])[\Yii::$app->composition->getLangShortCode()];
+                        $pattern = (empty($prefix)) ? $langSlug : $prefix . '/' . $langSlug;
                         if (!empty($helperArr)) {
-                            $c = count($endServiceArray);
-                            $endServiceArray[$c-1]['children'] = $this->buildRoute($helperArr);
+                            $endServiceArray = array_merge($endServiceArray, $this->prepareRules($helperArr, $pattern));
                             $helperArr = [];
                         }
-                        $endServiceArray[] = $serv;
-
-                    } elseif ((int) $serv['depth'] > $startLevel) {
-                        $helperArr = $serv;
+                        $endServiceArray[] = [
+                            'pattern' => $pattern,
+                            'route' => 'service/default/service',
+                            'defaults' => [
+                                'id' => $serv['id']
+                            ],
+                        ];
                     }
                 }
                 if (!empty($helperArr)) {
-                    $c = count($endServiceArray);
-                    $endServiceArray[$c-1]['children'] = $this->buildRoute($helperArr);
+                    $endServiceArray = array_merge($endServiceArray, $this->prepareRules($helperArr, $pattern));
                 }
             };
-
         }
-//        var_dump($endServiceArray);
         return $endServiceArray;
     }
 }

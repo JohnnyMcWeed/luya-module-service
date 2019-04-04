@@ -3,6 +3,7 @@
 namespace johnnymcweed\service\frontend\controllers;
 
 use johnnymcweed\service\models\Service;
+use luya\helpers\Url;
 use luya\news\models\Cat;
 use Yii;
 use yii\data\ActiveDataProvider;
@@ -22,16 +23,17 @@ class DefaultController extends Controller
                 'service' => $service
             ]);
         }
-        // Todo: 404 page
     }
 
     public function actionRoots()
     {
         if (!empty($roots = Service::find()->roots()->all())) {
+            if (count($roots) == 1) {
+                $this->redirect(Url::toRoute(['/service/default/service', 'id' => $roots[0]['id']]));
+            }
             return $this->render('roots', [
                 'roots' => $roots
             ]);
         }
-        // Todo: 404 page
     }
 }
