@@ -17,6 +17,9 @@ class RoutesBootstrap implements BootstrapInterface
 {
     public $rulePrefix = 'services';
 
+    /**
+     * @inheritDoc
+     */
     public function bootstrap($app)
     {
         if ($app->hasModule('service')) {
