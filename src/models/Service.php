@@ -200,7 +200,7 @@ class Service extends NgRestModel
             'lft' => 'number',
             'rgt' => 'number',
             'depth' => 'number',
-            'slug' => ['slug', 'listener' => 'title'],
+            'slug' => ['slug'],
             'seo_title' => 'text',
             'seo_description' => 'textarea',
             'intro' => 'textarea',
