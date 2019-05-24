@@ -61,7 +61,39 @@ class TeaserBlock extends PhpBlock
     {
         return [
             'vars' => [
-                ['var' => 'service', 'label' => Module::t('Service'), 'type' => self::TYPE_SELECT, 'options' => $this->getServices()]
+                [
+                    'var' => 'service',
+                    'label' => Module::t('Service'),
+                    'type' => self::TYPE_SELECT,
+                    'options' => $this->getServices()
+                ]
+            ],
+            'cfgs' => [
+                [
+                    'var' => 'showImage',
+                    'label' => 'Show image',
+                    'type' => self::TYPE_RADIO,
+                    'options' => [["value" => true, "label" => "Yes"],["value" => false, "label" => "No"]]
+                ],
+                [
+                    'var' => 'showTitle',
+                    'label' => 'Show image',
+                    'type' => self::TYPE_RADIO,
+                    'options' => [["value" => true, "label" => "Yes"],["value" => false, "label" => "No"]]
+                ],
+                [
+                    'var' => 'showText',
+                    'label' => 'Show image',
+                    'type' => self::TYPE_RADIO,
+                    'options' => [["value" => true, "label" => "Yes"],["value" => false, "label" => "No"]]
+                ],
+                [
+                    'var' => 'showLink',
+                    'label' => 'Show image',
+                    'type' => self::TYPE_RADIO,
+                    'options' => [["value" => true, "label" => "Yes"],["value" => false, "label" => "No"]]
+                ],
+
             ]
         ];
     }
