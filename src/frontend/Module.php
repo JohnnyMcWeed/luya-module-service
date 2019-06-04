@@ -17,6 +17,7 @@ class Module extends \luya\base\Module
 
     public $slugField = 'slug';
 
+    public $contentCompression = true;
     /**
      * The default item order in list view
      */

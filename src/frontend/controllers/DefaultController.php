@@ -6,6 +6,7 @@ use johnnymcweed\service\models\Service;
 use luya\helpers\Url;
 use luya\news\models\Cat;
 use Yii;
+use yii\web\View;
 use yii\data\ActiveDataProvider;
 use luya\web\Controller;
 use yii\data\Sort;
@@ -47,6 +48,31 @@ class DefaultController extends Controller
      * @var string og:url key which is used for meta registration. Use this constant in order to override the default implementation.
      */
     const META_OG_URL = 'ogUrl';
+
+
+    /**
+     * @inheritdoc
+     */
+    public function init()
+    {
+        parent::init();
+
+        // enable content compression to remove whitespace
+        if (!YII_DEBUG && YII_ENV_PROD && $this->module->contentCompression) {
+            $this->view->on(View::EVENT_AFTER_RENDER, [$this, 'minify']);
+        }
+    }
+
+    /**
+     * Minify the view content.
+     *
+     * @param \yii\base\ViewEvent $event
+     * @return string
+     */
+    public function minify($event)
+    {
+        return $event->output = $this->view->compress($event->output);
+    }
 
     /**
      * @todo
