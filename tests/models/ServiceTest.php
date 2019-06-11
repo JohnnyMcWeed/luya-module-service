@@ -28,6 +28,6 @@ class ServiceTest extends \luya\testsuite\cases\WebApplicationTestCase
 
     public function testMessageFiles()
     {
-        $this->compareMessages(Yii::getAlias('@serviceadmin/messages'), 'en');
+        $this->compareMessages(Yii::getAlias('@serviceadmin/messages'), 'de-CH');
     }
 }

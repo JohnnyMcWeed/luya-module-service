@@ -26,7 +26,7 @@ class RoutesBootstrap implements BootstrapInterface
             $app->on($app::EVENT_BEFORE_REQUEST, function ($event) {
                 if (!$event->sender->request->isConsoleRequest && !$event->sender->request->isAdmin) {
                     $services = Service::find()->addOrderBy(['rgt' => SORT_DESC])->asArray()->all();
-                    $event->sender->urlManager->addRules($this->prepareRules($services, $this->rulePrefix));
+                    $event->sender->urlManager->addRules(RoutesBootstrap::prepareRules($services, $this->rulePrefix));
                 }
             });
         }
@@ -40,25 +40,28 @@ class RoutesBootstrap implements BootstrapInterface
      *
      * @return array The routes array for the config
      */
-    private function prepareRules($serviceArray, $prefix = null)
+    public static function prepareRules($serviceArray, $prefix = null)
     {
         $endServiceArray = [];
         if (!empty($serviceArray)) {
             if (!empty($serviceArray[0]['depth']) ||
                 isset($serviceArray[0]['depth']) && (int) $serviceArray[0]['depth'] === 0 ) {
                 $startLevel = (int) $serviceArray[0]['depth'];
+                $helperPrefix = '';
                 $helperArr = [];
                 $pattern = '';
                 foreach ($serviceArray as $serv) {
                     if ((int) $serv['depth'] > $startLevel) {
                         $helperArr[] = $serv;
                     } elseif ((int) $serv['depth'] === $startLevel) {
-                        $langSlug = Json::decode($serv['slug'])[\Yii::$app->composition->getLangShortCode()];
-                        $pattern = (empty($prefix)) ? $langSlug : $prefix . '/' . $langSlug;
                         if (!empty($helperArr)) {
-                            $endServiceArray = array_merge($endServiceArray, $this->prepareRules($helperArr, $pattern));
+                            $endServiceArray = array_merge($endServiceArray, RoutesBootstrap::prepareRules($helperArr, $helperPrefix));
+                            $helperPrefix = '';
                             $helperArr = [];
                         }
+                        $langSlug = Json::decode($serv['slug'])[\Yii::$app->composition->getLangShortCode()];
+                        $pattern = (empty($prefix)) ? $langSlug : $prefix . '/' . $langSlug;
+                        $helperPrefix = $pattern;
                         $endServiceArray[] = [
                             'pattern' => $pattern,
                             'route' => 'service/default/service',
@@ -69,7 +72,7 @@ class RoutesBootstrap implements BootstrapInterface
                     }
                 }
                 if (!empty($helperArr)) {
-                    $endServiceArray = array_merge($endServiceArray, $this->prepareRules($helperArr, $pattern));
+                    $endServiceArray = array_merge($endServiceArray, RoutesBootstrap::prepareRules($helperArr, $pattern));
                 }
             };
         }

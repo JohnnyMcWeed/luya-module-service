@@ -16,6 +16,9 @@
   "require": {
     "netfant/luya-category": "dev-master"
   },
+  "require-dev": {
+    "luyadev/luya-testsuite": "^1.0"
+  },
   "autoload" : {
     "psr-4" : {
       "johnnymcweed\\service\\" : "src/"
