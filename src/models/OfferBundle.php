@@ -21,7 +21,7 @@ class OfferBundle extends NgRestModel
     /**
      * @inheritdoc
      */
-    public $i18n = ['title', 'description'];
+    public $i18n = ['title', 'description', 'benefits'];
 
     /**
      * @inheritdoc
@@ -76,10 +76,12 @@ class OfferBundle extends NgRestModel
             'id' => Module::t('ID'),
             'title' => Module::t('Title'),
             'description' => Module::t('Description'),
+            'benefits' => Module::t('Benefits'),
             'price' => Module::t('Price'),
             'discount_price' => Module::t('Discount price'),
             'discount_from' => Module::t('Discount price from'),
             'discount_until' => Module::t('Discount price until'),
+            'featured' => Module::t('Featured'),
             'is_discount' => Module::t('Is discount'),
             'timestamp_create' => Module::t( 'Created'),
             'timestamp_display_from' => Module::t( 'Display From'),
@@ -94,11 +96,11 @@ class OfferBundle extends NgRestModel
     public function rules()
     {
         return [
-            [['description'], 'string'],
+            [['description', 'benefits'], 'string'],
             [['create_user_id', 'update_user_id', 'timestamp_create',
                 'timestamp_update', 'timestamp_display_from', 'timestamp_display_until', 'discount_from', 'discount_until'], 'integer'],
             [['price', 'discount_price',], 'number'],
-            [['is_discount', 'is_display_limit'], 'boolean'],
+            [['is_discount', 'is_display_limit', 'featured'], 'boolean'],
             [['title'], 'string', 'max' => 255],
         ];
     }
@@ -119,10 +121,12 @@ class OfferBundle extends NgRestModel
         return [
             'title' => 'text',
             'description' => 'textarea',
+            'benefits' => 'html',
             'price' => 'decimal',
             'discount_price' => 'decimal',
             'discount_from' => 'datetime',
             'discount_until' => 'datetime',
+            'featured' => 'toggleStatus',
             'is_discount' => 'toggleStatus',
             'is_display_limit' => 'toggleStatus',
             'timestamp_display_from' => 'datetime',
@@ -145,7 +149,7 @@ class OfferBundle extends NgRestModel
     {
         return [
             ['list', ['title', 'description', 'price']],
-            [['create', 'update'], ['title', 'description', 'price', 'discount_price', 'discount_from', 'discount_until',
+            [['create', 'update'], ['title', 'description', 'benefits', 'featured', 'price', 'discount_price', 'discount_from', 'discount_until',
                 'is_discount', 'timestamp_display_from', 'timestamp_display_until', 'is_display_limit']],
             ['delete', false],
         ];
