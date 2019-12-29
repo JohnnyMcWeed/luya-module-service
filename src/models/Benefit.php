@@ -58,7 +58,7 @@ class Benefit extends NgRestModel
     {
         return [
             [['image_id'], 'integer'],
-            [['title', 'teaser'], 'string', 'max' => 255],
+            [['title', 'teaser'], 'string'],
         ];
     }
 
